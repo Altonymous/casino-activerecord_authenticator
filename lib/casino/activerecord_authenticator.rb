@@ -15,7 +15,7 @@ class CASino::ActiveRecordAuthenticator
 
     eval <<-END
       class #{self.class.to_s}::#{@options[:table].classify} < AuthDatabase
-        set_table_name "#{@options[:table]}"
+        self.table_name = "#{@options[:table]}"
       end
     END
 
@@ -24,7 +24,7 @@ class CASino::ActiveRecordAuthenticator
   end
 
   def validate(username, password)
-    @model.verify_active_connections!
+    # @model.verify_active_connections!
     user = @model.send("find_by_#{@options[:username_column]}!", username)
     password_from_database = user.send(@options[:password_column])
 
